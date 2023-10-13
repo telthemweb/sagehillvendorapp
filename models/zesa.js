@@ -50,6 +50,8 @@ const zesaSchema = new Schema({
 const Zesa = mongoose.model('zesaTockens', zesaSchema)
 
 
-export default Zesa;
+module.exports = {
+  Zesa
+}
 
 

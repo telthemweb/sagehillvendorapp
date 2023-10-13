@@ -28,6 +28,8 @@ const dstvSchema = new Schema({
 });
 
 const dstvModel = mongoose.model('dstv', dstvSchema);
-export default dstvModel;
+module.exports = {
+  dstvModel
+}
 
 

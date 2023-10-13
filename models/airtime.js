@@ -22,5 +22,7 @@ const airTimeSchema = new Schema({
 
 const Airtime = mongoose.model('Airtime', airTimeSchema);
 
+module.exports = {
+  Airtime
+}
 
-export default Airtime;

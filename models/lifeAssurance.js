@@ -25,7 +25,9 @@ const lifeAssuranceSchema = new Schema({
 
 const lifeAssuranceModel = mongoose.model('lifeAssurance', lifeAssuranceSchema);
 
-export default lifeAssuranceModel;
+module.exports = {
+  lifeAssuranceModel
+}
 
 
 

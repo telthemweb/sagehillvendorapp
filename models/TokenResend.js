@@ -25,4 +25,6 @@ const failedZesaSchema = new Schema({
 })
 
 const failedZesa = mongoose.model('InProgressToken', failedZesaSchema);
-export default failedZesa;
+module.exports = {
+  failedZesa
+}

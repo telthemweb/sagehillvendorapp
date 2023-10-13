@@ -13,5 +13,7 @@ const rateSchema = new Schema({
 
 const Rate = mongoose.model("rate", rateSchema);
 
-export default Rate;
+module.exports = {
+  Rate
+}
 

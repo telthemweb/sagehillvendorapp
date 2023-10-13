@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const {vendorNumbers} = require("../utils/constants.js");
 const {telgenerateRandomString} = require("../utils/util.js");
 const {generateAirtimeVendorRefence,nowDate} = require("../utils/util.js");
-const Airtime = require("../models/airtime.js");
+const { Airtime } = require("../models/airtime.js");
 const axios  =require("axios");
 const econetSouceMobile = process.env.ECONETSOURCENUMBER //"263772978751";
 

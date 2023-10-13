@@ -157,7 +157,7 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
                 status: "success",
                 utilityAccount: utilityAccount,
                 narrative: narrative,
-                currencyCode, currencyCode,
+                currencyCode: currencyCode,
                 sourceMobile: sourceMobile,
                 targetMobile: targetMobile,
                 date: transmissionDate
@@ -175,7 +175,7 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
                             status: "failed",
                             utilityAccount: utilityAccount,
                             narrative: narrative,
-                            currencyCode, "zwl",
+                            currencyCode: "zwl",
                             sourceMobile: sourceMobile,
                             targetMobile: targetMobile,
                             date: transmissionDate

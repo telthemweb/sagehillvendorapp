@@ -17,7 +17,7 @@ const econetAirtimeControllerV2 = asyncHandler(async (req, res, next) => {
     const netone = /^071/;
     let method;
     var my_status;
-    // const orderNumber = telgenerateRandomString();
+    // const orderNumber = telgenerateRandomString(10);
 
 
     if (econet.test(payingNumber)) { method = 'ecocash' }
@@ -54,47 +54,37 @@ const econetAirtimeControllerV2 = asyncHandler(async (req, res, next) => {
     ).then(data => {
 const { vendorReference, transactionAmount, utilityAccount, narrative, currencyCode, sourceMobile, targetMobile, transmissionDate } = data.data;
         if (data.data.responseCode === "00") {
-            new Airtime({
-                orderNumber: telgenerateRandomString(),
+            Airtime.create({
+                orderNumber: telgenerateRandomString(10),
                 vendorReference: vendorReference,
                 type: "econet",
                 amount: transactionAmount / 100,
                 status: "success",
                 utilityAccount: utilityAccount,
                 narrative: narrative,
-                currencyCode: currencyCode,
+                currencyCode: "ZWL",
                 sourceMobile: sourceMobile,
                 targetMobile: targetMobile,
                 date: transmissionDate
-            })
-                .save()
-                // .then(() => {
-                //     //  send SMS to client using Twilio
-
-
-                //     // sendSMS(`${targetMobile}`, data.data)
-                //     // using the Madyo sms gateway
-                //     sendEconetSMS_Airtime(transactionAmount / 100, `${targetMobile}`)
-                // })
+            });
             res.send(data.data)
         }
         else{
             console.log("General Error.. response code 05")
             // save the failed transaction in the database
-                        new Airtime({
-                            orderNumber: telgenerateRandomString(),
+                        Airtime.create({
+                            orderNumber: telgenerateRandomString(10),
                             vendorReference: vendorReference,
                             type: "econet",
                             amount: transactionAmount / 100,
                             status: "failed",
                             utilityAccount: utilityAccount,
                             narrative: narrative,
-                            currencyCode: "zwl",
+                            currencyCode: "ZWL",
                             sourceMobile: sourceMobile,
                             targetMobile: targetMobile,
                             date: transmissionDate
                         })
-                            .save()
             return res.json({
                 error: "err01",
                 message: data.data.narrative,
@@ -149,8 +139,8 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
        const { vendorReference, transactionAmount, utilityAccount, narrative, currencyCode, sourceMobile, targetMobile, transmissionDate } = data.data;
         console.log(data.data)
         if (data.data.responseCode === "00") {
-             new Airtime({
-                orderNumber: telgenerateRandomString(),
+             Airtime.create({
+                orderNumber: telgenerateRandomString(10),
                 vendorReference: vendorReference,
                 type: "econet",
                 amount: transactionAmount / 100,
@@ -162,25 +152,23 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
                 targetMobile: targetMobile,
                 date: transmissionDate
             })
-                .save()
             res.send(data.data)
         }
         else{
             console.log("General Error.. response code 05")
-            new Airtime({
-                            orderNumber: telgenerateRandomString(),
+            Airtime.create({
+                            orderNumber: telgenerateRandomString(10),
                             vendorReference: vendorReference,
                             type: "econet",
                             amount: transactionAmount / 100,
                             status: "failed",
                             utilityAccount: utilityAccount,
                             narrative: narrative,
-                            currencyCode: "zwl",
+                            currencyCode: currencyCode,
                             sourceMobile: sourceMobile,
                             targetMobile: targetMobile,
                             date: transmissionDate
                         })
-                            .save()
             return res.json({
                 error: "err01",
                 message: data.data.narrative,

@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const {vendorNumbers} = require("../utils/constants.js");
 const {generateAirtimeVendorRefence,nowDate} = require("../utils/util.js");
+const Airtime = require("../models/airtime.js");
 const axios  =require("axios");
 // const  nanoid  =require('nanoid');
 const econetSouceMobile = process.env.ECONETSOURCENUMBER //"263772978751";
@@ -51,12 +52,49 @@ const econetAirtimeControllerV2 = asyncHandler(async (req, res, next) => {
 
 
     ).then(data => {
-
+const { vendorReference, transactionAmount, utilityAccount, narrative, currencyCode, sourceMobile, targetMobile, transmissionDate } = data.data;
         if (data.data.responseCode === "00") {
+            new Airtime({
+                orderNumber: nanoid(10),
+                vendorReference: vendorReference,
+                type: "econet",
+                amount: transactionAmount / 100,
+                status: "success",
+                utilityAccount: utilityAccount,
+                narrative: narrative,
+                currencyCode, currencyCode,
+                sourceMobile: sourceMobile,
+                targetMobile: targetMobile,
+                date: transmissionDate
+            })
+                .save()
+                // .then(() => {
+                //     //  send SMS to client using Twilio
+
+
+                //     // sendSMS(`${targetMobile}`, data.data)
+                //     // using the Madyo sms gateway
+                //     sendEconetSMS_Airtime(transactionAmount / 100, `${targetMobile}`)
+                // })
             res.send(data.data)
         }
         else{
             console.log("General Error.. response code 05")
+            // save the failed transaction in the database
+                        new Airtime({
+                            orderNumber: nanoid(10),
+                            vendorReference: vendorReference,
+                            type: "econet",
+                            amount: transactionAmount / 100,
+                            status: "failed",
+                            utilityAccount: utilityAccount,
+                            narrative: narrative,
+                            currencyCode, "zwl",
+                            sourceMobile: sourceMobile,
+                            targetMobile: targetMobile,
+                            date: transmissionDate
+                        })
+                            .save()
             return res.json({
                 error: "err01",
                 message: data.data.narrative,
@@ -108,12 +146,41 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
 
     ).then(data => {
 
+       const { vendorReference, transactionAmount, utilityAccount, narrative, currencyCode, sourceMobile, targetMobile, transmissionDate } = data.data;
         console.log(data.data)
         if (data.data.responseCode === "00") {
+             new Airtime({
+                orderNumber: nanoid(10),
+                vendorReference: vendorReference,
+                type: "econet",
+                amount: transactionAmount / 100,
+                status: "success",
+                utilityAccount: utilityAccount,
+                narrative: narrative,
+                currencyCode, currencyCode,
+                sourceMobile: sourceMobile,
+                targetMobile: targetMobile,
+                date: transmissionDate
+            })
+                .save()
             res.send(data.data)
         }
         else{
             console.log("General Error.. response code 05")
+            new Airtime({
+                            orderNumber: nanoid(10),
+                            vendorReference: vendorReference,
+                            type: "econet",
+                            amount: transactionAmount / 100,
+                            status: "failed",
+                            utilityAccount: utilityAccount,
+                            narrative: narrative,
+                            currencyCode, "zwl",
+                            sourceMobile: sourceMobile,
+                            targetMobile: targetMobile,
+                            date: transmissionDate
+                        })
+                            .save()
             return res.json({
                 error: "err01",
                 message: data.data.narrative,

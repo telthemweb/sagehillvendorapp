@@ -6,8 +6,15 @@ const morgan = require("morgan");
 const cors = require("cors");
 const PORT = process.env.PORT || 5600;
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
+const mongoose = require("mongoose");
 
-
+mongoose.connect(`${process.env.SAGEHILL_MONGODB_CONNECTION}`, { useNewUrlParser: true });
+mongoose.set('strictQuery', false);
+mongoose.connection.once('open', () => {
+    console.log('Connected to Sagehill');
+}).on('error', (error) => {
+    console.log('connection error ', error);
+});
 
 
 const zesaRoute = require("./routes/zesaRoute");

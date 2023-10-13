@@ -62,7 +62,7 @@ const { vendorReference, transactionAmount, utilityAccount, narrative, currencyC
                 status: "success",
                 utilityAccount: utilityAccount,
                 narrative: narrative,
-                currencyCode, currencyCode,
+                currencyCode: currencyCode,
                 sourceMobile: sourceMobile,
                 targetMobile: targetMobile,
                 date: transmissionDate
@@ -89,7 +89,7 @@ const { vendorReference, transactionAmount, utilityAccount, narrative, currencyC
                             status: "failed",
                             utilityAccount: utilityAccount,
                             narrative: narrative,
-                            currencyCode, "zwl",
+                            currencyCode: "zwl",
                             sourceMobile: sourceMobile,
                             targetMobile: targetMobile,
                             date: transmissionDate

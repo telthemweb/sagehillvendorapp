@@ -16,6 +16,23 @@ const randomString = (length, chars) => {
     return result;
 }
 
+ telgenerateRandomString=(length)=> {
+  const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numbers = '0123456789';
+
+  let result = '';
+
+  for (let i = 0; i < length; i++) {
+    if (i === 4) {
+      result += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    } else {
+      result += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+  }
+
+  return result;
+}
+
  const generateAirtimeVendorRefence = (ref) => {
 
 
@@ -169,5 +186,6 @@ module.exports = {
 	generateTeloneVendorRefence,
 	nowDate,
     sendEconetSMS_Airtime,
-    smsGateway
+    smsGateway,
+    telgenerateRandomString
 }

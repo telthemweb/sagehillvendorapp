@@ -1,9 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const {vendorNumbers} = require("../utils/constants.js");
+const {telgenerateRandomString} = require("../utils/util.js");
 const {generateAirtimeVendorRefence,nowDate} = require("../utils/util.js");
 const Airtime = require("../models/airtime.js");
 const axios  =require("axios");
-const { nanoid } = require('nanoid');
+const { telgenerateRandomString } = require('telgenerateRandomString');
 const econetSouceMobile = process.env.ECONETSOURCENUMBER //"263772978751";
 
 
@@ -17,7 +18,7 @@ const econetAirtimeControllerV2 = asyncHandler(async (req, res, next) => {
     const netone = /^071/;
     let method;
     var my_status;
-    // const orderNumber = nanoid();
+    // const orderNumber = telgenerateRandomString();
 
 
     if (econet.test(payingNumber)) { method = 'ecocash' }
@@ -55,7 +56,7 @@ const econetAirtimeControllerV2 = asyncHandler(async (req, res, next) => {
 const { vendorReference, transactionAmount, utilityAccount, narrative, currencyCode, sourceMobile, targetMobile, transmissionDate } = data.data;
         if (data.data.responseCode === "00") {
             new Airtime({
-                orderNumber: nanoid(),
+                orderNumber: telgenerateRandomString(),
                 vendorReference: vendorReference,
                 type: "econet",
                 amount: transactionAmount / 100,
@@ -82,7 +83,7 @@ const { vendorReference, transactionAmount, utilityAccount, narrative, currencyC
             console.log("General Error.. response code 05")
             // save the failed transaction in the database
                         new Airtime({
-                            orderNumber: nanoid(),
+                            orderNumber: telgenerateRandomString(),
                             vendorReference: vendorReference,
                             type: "econet",
                             amount: transactionAmount / 100,
@@ -150,7 +151,7 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
         console.log(data.data)
         if (data.data.responseCode === "00") {
              new Airtime({
-                orderNumber: nanoid(),
+                orderNumber: telgenerateRandomString(),
                 vendorReference: vendorReference,
                 type: "econet",
                 amount: transactionAmount / 100,
@@ -168,7 +169,7 @@ const econetAirtimeControllerV2USD = asyncHandler(async (req, res, next) => {
         else{
             console.log("General Error.. response code 05")
             new Airtime({
-                            orderNumber: nanoid(),
+                            orderNumber: telgenerateRandomString(),
                             vendorReference: vendorReference,
                             type: "econet",
                             amount: transactionAmount / 100,
